@@ -150,15 +150,15 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <div className="min-h-screen">
       <div className="max-w-5xl mx-auto p-4 sm:p-6">
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
-          <header className="flex items-center justify-between mb-4">
+          <header className="sticky top-0 z-50 flex items-center justify-between mb-4 py-4 bg-white/80 backdrop-blur-sm border-b border-gray-100">
             <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">TapTote</h1>
             <div className="flex items-center gap-2">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline" className="gap-1">
+                  <Button variant="outline" size="lg" className="gap-2 px-6">
                     <QrCode className="w-4 h-4" /> NFC / QR
                   </Button>
                 </DialogTrigger>
@@ -172,11 +172,11 @@ export default function App() {
                     </p>
                     <div className="flex items-center gap-2">
                       <Input readOnly value={pageUrl} />
-                      <Button variant="secondary" size="sm" onClick={() => copyToClipboard(pageUrl)} className="gap-1">
+                      <Button variant="secondary" size="lg" onClick={() => copyToClipboard(pageUrl)} className="gap-2 px-6">
                         <Copy className="w-4 h-4" /> Copy
                       </Button>
                       <a href={pageUrl} target="_blank" rel="noreferrer" className="inline-flex">
-                        <Button size="sm" className="gap-1">
+                        <Button size="lg" className="gap-2 px-6">
                           <External className="w-4 h-4" /> Open
                         </Button>
                       </a>
@@ -243,14 +243,14 @@ export default function App() {
                             onChange={onPick} 
                             className="hidden" 
                           />
-                          <Button variant="secondary" className="gap-1" onClick={openFilePicker}>
+                          <Button variant="secondary" size="lg" className="gap-2 px-6" onClick={openFilePicker}>
                             <Upload className="w-4 h-4" /> Upload
                           </Button>
-                          <Button variant="outline" className="gap-1" onClick={openCameraUpload}>
+                          <Button variant="outline" size="lg" className="gap-2 px-6" onClick={openCameraUpload}>
                             <Camera className="w-4 h-4" /> Camera
                           </Button>
                         </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
                           {tote.images.map((img) => (
                             <div key={img.id} className="relative group">
                               <img src={img.url} alt={img.name} className="w-full h-28 object-cover rounded-lg shadow" />
@@ -293,11 +293,11 @@ export default function App() {
                         <Label>Link</Label>
                         <div className="flex items-center gap-2">
                           <Input readOnly value={pageUrl} />
-                          <Button variant="secondary" size="sm" onClick={() => copyToClipboard(pageUrl)} className="gap-1">
+                          <Button variant="secondary" size="lg" onClick={() => copyToClipboard(pageUrl)} className="gap-2 px-6">
                             <Copy className="w-4 h-4" /> Copy
                           </Button>
                           <a href={pageUrl} target="_blank" rel="noreferrer">
-                            <Button size="sm" className="gap-1">
+                            <Button size="lg" className="gap-2 px-6">
                               <External className="w-4 h-4" /> Open
                             </Button>
                           </a>
