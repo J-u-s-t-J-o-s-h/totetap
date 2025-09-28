@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { QRCodeCanvas } from "qrcode.react";
 import { Upload, Copy, ExternalLink as External, QrCode, Share2, Images, Camera, Trash2, Info } from "lucide-react";
@@ -72,6 +72,8 @@ export default function App() {
       return false;
     }
   });
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     localStorage.setItem(LS_KEY_SETTINGS, JSON.stringify({ cloudEnabled }));
   }, [cloudEnabled]);
@@ -130,6 +132,10 @@ export default function App() {
     files.forEach((f) => uploadImage(f));
     e.currentTarget.value = "";
   };
+  const openFilePicker = () => {
+    fileInputRef.current?.click();
+  };
+
   const openCameraUpload = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -220,22 +226,30 @@ export default function App() {
                       <div
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={onDrop}
-                        className="border border-dashed rounded-xl p-6 text-center"
+                        onClick={openFilePicker}
+                        className="border border-dashed rounded-xl p-6 text-center cursor-pointer hover:bg-neutral-50 transition-colors"
                       >
                         <div className="flex items-center justify-center gap-2 mb-3">
                           <Images className="w-5 h-5" />
                           <div className="font-medium">Photos</div>
                         </div>
                         <p className="text-sm text-neutral-600 mb-3">Drag & drop or upload images.</p>
-                        <label className="inline-flex items-center gap-2 cursor-pointer">
-                          <Input type="file" accept="image/*" multiple onChange={onPick} className="hidden" />
-                          <Button variant="secondary" className="gap-1">
+                        <div className="inline-flex items-center gap-2">
+                          <Input 
+                            ref={fileInputRef}
+                            type="file" 
+                            accept="image/*" 
+                            multiple 
+                            onChange={onPick} 
+                            className="hidden" 
+                          />
+                          <Button variant="secondary" className="gap-1" onClick={openFilePicker}>
                             <Upload className="w-4 h-4" /> Upload
                           </Button>
                           <Button variant="outline" className="gap-1" onClick={openCameraUpload}>
                             <Camera className="w-4 h-4" /> Camera
                           </Button>
-                        </label>
+                        </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-5">
                           {tote.images.map((img) => (
                             <div key={img.id} className="relative group">
